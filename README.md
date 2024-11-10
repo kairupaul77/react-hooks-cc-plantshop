@@ -1,150 +1,128 @@
-# Phase 2 Code Challenge: Plantsy
+# Plant Store App
 
-## Demo
+This is a React-based plant store application with a backend API powered by JSON Server. The app allows users to view a list of plants, mark plants as sold out, search for plants by name. The backend is mocked using JSON Server, and the app is designed to be deployed on platforms like Netlify for the frontend and Render or Heroku for the backend.
 
-Use this gif as an example of how the app should work.
+## Features
 
-![Demo GIF](https://curriculum-content.s3.amazonaws.com/phase-2/react-hooks-mock-code-challenge-plantshop/plantsy_demo.gif)
+### Core Features
+- **View All Plants**: Displays all available plants on the homepage.
+- **Mark as Sold Out**: Users can mark a plant as "sold out."
+- **Search Plants**: Users can search for plants by their name.
 
-## Instructions
 
-Welcome to Plantsy! You've been tasked with building out some features for the
-admin side of a plant store. The designers have put together the components and
-CSS. Now it's up to you to bring the features to life by adding stateful logic
-as well as persisting data to the backend via our API.
+## Technologies Used
 
-Your job will be to make our app work according to the user stories you will
-find the [Core Deliverables](#Core-Deliverables) section.
+- **React**: Frontend framework for building the user interface.
+- **JSON Server**: Mock backend server for simulating an API (used for development and testing).
+- **CSS**: For styling the components (you can add your own styling or use a CSS framework like Bootstrap).
+- **Netlify**: For deploying the React frontend.
+- **Render/Heroku**: For deploying the backend API.
 
-## Setup
+## Installation
 
-1. Run `npm install` in your terminal.
-2. Run `npm run server`. This will run your backend on port `6001`.
-3. In a new terminal, run `npm start`.
+Follow these steps to get the app running on your local machine.
 
-Make sure to open [http://localhost:6001/plants](http://localhost:6001/plants)
-in the browser to verify that your backend is working before you proceed!
+### 1. Clone the repository
 
-## Endpoints
 
-The base URL for your backend is: `http://localhost:6001`
+git clone https://github.com/your-username/plant-store-app.git
+cd plant-store-app
+2. Install dependencies
+Run the following command to install both frontend and backend dependencies:
 
-## Core Deliverables
 
-As a user:
+Copy code
+npm install
+3. Set up the backend (JSON Server)
+For development, you'll need to run the JSON Server mock API.
 
-1. When the app starts, I can see all plants.
-2. I can add a new plant to the page by submitting the form.
-3. I can mark a plant as "sold out".
-4. I can search for plants by their name and see a filtered list of plants.
+Create a db.json file in your root directory  and add your plant data to it.
 
-### Endpoints for Core Deliverables
+Run the backend server on port 6001:
 
-#### GET /plants
 
-Example Response:
+Copy code
+npm run server
+This will start the backend API, and it will be available at http://localhost:6001.
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Aloe",
-    "image": "./images/aloe.jpg",
-    "price": 15.99
-  },
-  {
-    "id": 2,
-    "name": "ZZ Plant",
-    "image": "./images/zz-plant.jpg",
-    "price": 25.98
-  }
-]
-```
+4. Start the React frontend
+To start the React development server:
 
-#### POST `/plants`
 
-Required Headers:
+Copy code
+npm start
+The frontend will be available at http://localhost:3000.
 
-```js
-{
-  "Content-Type": "application/json"
-}
-```
+Usage
+Viewing Plants
+When you load the app, you will see a list of all plants fetched from the backend. Each plant displays:
 
-Request Object:
+The name of the plant
+The plant image
+The price of the plant
+Adding a New Plant
+Click the "Add Plant" button to show the form. Fill in the plant name, image URL, and price, then click "Add Plant" to submit it. The new plant will be added to the list, and the form will reset.
 
-```json
-{
-  "name": "string",
-  "image": "string",
-  "price": number
-}
-```
+Marking a Plant as Sold Out
+For each plant, you will see a "Mark as Sold Out" button. Clicking it will mark the plant as sold out (the status can be tracked by toggling the plant's availability).
 
-Example Response:
+Deleting a Plant
+Each plant also has a "Delete" button. Clicking this will remove the plant from the backend and update the plant list.
 
-```json
-{
-  "id": 1,
-  "name": "Aloe",
-  "image": "./images/aloe.jpg",
-  "price": 15.99
-}
-```
+Searching for a Plant
+Use the search bar to filter plants by their name. As you type, the list of plants will automatically update to show only those that match the search query.
 
-## Advanced Deliverables
+Deployment
+Frontend Deployment (React App)
+Build the app for production:
 
-These deliverables are not required to pass the code challenge, but if you have
-the extra time, or even after the code challenge, they are a great way to
-stretch your skills.
 
-You'll have to add additional elements for these features. Feel free to style
-them however you see fit!
+Copy code
+npm run build
+Deploy on Netlify:
 
-> Note: If you are going to attempt these advanced deliverables, please be sure
-> to have a working commit with all the Core Deliverables first!
+Go to Netlify, sign up/login, and click New Site from Git.
+Connect your GitHub repository.
+Configure the build settings:
+Build Command: npm run build
+Publish Directory: build
+Click Deploy.
+Once deployed, Netlify will provide a URL (e.g., https://your-site-name.netlify.app) where the React app will be live.
 
-As a user:
+Backend Deployment (JSON Server)
+You can deploy your JSON Server backend using platforms like Render or Heroku.
 
-1. I can update the price of a plant and still see the updated price after
-   refreshing the page.
-2. I can delete a plant and it is still gone when I refresh the page.
+Using Render:
+Push your backend code to GitHub.
+Create a new web service on Render.
+Connect your GitHub repository.
+Set the start command for Render to: json-server --watch db.json --port $PORT.
+Deploy your service.
+Using Heroku:
+Push your backend code to GitHub (if not already done).
+Create a new app on Heroku.
+Connect your GitHub repository.
+Set the start command in the Heroku dashboard to: json-server --watch db.json --port $PORT.
+Deploy the app.
+Once deployed, your backend will be live at a URL like https://your-backend.herokuapp.com or https://your-backend.onrender.com.
 
-### Endpoints for Advanced Deliverables
+Update the Frontend API URL
+After deploying both the frontend and backend, update the API URL in your React app to point to your live backend URL.
 
-#### PATCH /plants/:id
 
-Required Headers:
 
-```js
-{
-  "Content-Type": "application/json"
-}
-```
+javascript
+Copy code
+fetch('http://localhost:6001/plants')
+with:
 
-Request Object:
+javascript
+Copy code
+fetch('https://your-backend.onrender.com/plants') // Or your Heroku backend URL
+Contributing
+Fork the repository.
+Clone your fork to your local machine.
+Make changes and commit them.
+Push your changes to your forked repository.
+Create a pull request to contribute your changes
 
-```json
-{
-  "price": number
-}
-```
-
-Example Response:
-
-```json
-{
-  "id": 1,
-  "name": "Aloe",
-  "image": "./images/aloe.jpg",
-  "price": 16.99
-}
-```
-
-#### DELETE /plants/:id
-
-Example Response:
-
-```json
-{}
-```

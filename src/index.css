@@ -1,4 +1,4 @@
-/* Style for the form container */
+
 .new-plant-form {
   margin: 20px 0;
   padding: 10px;
@@ -6,21 +6,21 @@
   border-radius: 8px;
 }
 
-/* Style the individual form elements to display in a row */
+
 .form-row {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap if they overflow */
-  gap: 10px; /* Add spacing between the elements */
-  justify-content: flex-start; /* Align items to the left */
+  flex-wrap: wrap; 
+  gap: 10px; 
+  justify-content: flex-start; 
 }
 
-/* Style each input container (form group) */
+
 .form-group {
-  flex: 1; /* Allow inputs to grow */
-  min-width: 150px; /* Prevent inputs from becoming too small */
+  flex: 1; 
+  min-width: 150px; 
 }
 
-/* Style the input fields */
+
 input[type="text"],
 input[type="number"] {
   width: 100%;
@@ -30,12 +30,12 @@ input[type="number"] {
   border-radius: 4px;
 }
 
-/* Style the checkbox */
+
 input[type="checkbox"] {
   margin: 5px 0;
 }
 
-/* Style the submit button */
+
 button {
   padding: 10px 20px;
   background-color: #4CAF50;

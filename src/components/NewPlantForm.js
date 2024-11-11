@@ -5,35 +5,35 @@ function NewPlantForm({ addPlant }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
-  const [inStock, setInStock] = useState(true); // Default to "in stock"
+  const [inStock, setInStock] = useState(true); 
 
   // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form behavior (refreshing the page)
+    e.preventDefault(); 
     
-    // Validate inputs (basic check for required fields)
+    
     if (!name || !price || !image) {
       alert("Please fill in all fields.");
       return;
     }
 
-    // Prepare the new plant object
+    
     const newPlant = {
-      id: Date.now(), // Use the current timestamp as a unique id
+      id: Date.now(), 
       name,
       price: parseFloat(price),
       image,
       inStock,
     };
 
-    // Call the addPlant function passed from the parent (App.js)
+    
     addPlant(newPlant);
 
-    // Clear form after submission
+    
     setName('');
     setPrice('');
     setImage('');
-    setInStock(true); // Reset the inStock to true after submitting
+    setInStock(true); 
   };
 
   return (

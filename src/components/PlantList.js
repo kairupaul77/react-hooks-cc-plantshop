@@ -1,23 +1,61 @@
-import React from 'react';
+import React, { useState } from "react";
 
-function PlantList({ plants, onDelete }) {
+function PlantList({ plants, toggleStockStatus, deletePlant, updatePlant }) {
+  const [isEditing, setIsEditing] = useState(null); // To track if a plant is being edited
+  const [editedPlant, setEditedPlant] = useState({});
+
+  const handleEditChange = (event) => {
+    const { name, value } = event.target;
+    setEditedPlant((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSaveEdit = (plant) => {
+    // Save the updated plant
+    updatePlant({ ...plant, ...editedPlant });
+    setIsEditing(null); // Exit editing mode
+  };
+
   return (
     <div>
-      <h2>Plant List</h2>
-      <div className="plant-list">
+      <ul>
         {plants.map((plant) => (
-          <div key={plant.id} className="plant-card">
-            <img src={plant.image} alt={plant.name} />
-            <h3>{plant.name}</h3>
-            <p>${plant.price}</p>
-            {/* Mark as sold-out button */}
-            <button onClick={() => alert(`Marking ${plant.name} as sold-out!`)}>Mark as Sold Out</button>
+          <li key={plant.id}>
+            <div>
+              {/* Display Image */}
+              <img src={plant.image} alt={plant.name} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
 
-            {/* Delete button */}
-            <button onClick={() => onDelete(plant.id)}>Delete</button>
-          </div>
+              {isEditing === plant.id ? (
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={editedPlant.name || plant.name}
+                    onChange={handleEditChange}
+                  />
+                  <input
+                    type="number"
+                    name="price"
+                    value={editedPlant.price || plant.price}
+                    onChange={handleEditChange}
+                  />
+                  <button onClick={() => handleSaveEdit(plant)}>Save</button>
+                </div>
+              ) : (
+                <div>
+                  <p>{plant.name}</p>
+                  <p>{plant.price}</p>
+                  <p>{plant.inStock ? "In Stock" : "Out of Stock"}</p>
+                  <button onClick={() => toggleStockStatus(plant.id)}>
+                    {plant.inStock ? "In Stock" : "Out of Stock"}
+                  </button>
+                  <button onClick={() => setIsEditing(plant.id)}>Edit</button>
+                  <button onClick={() => deletePlant(plant.id)}>Delete</button>
+                </div>
+              )}
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

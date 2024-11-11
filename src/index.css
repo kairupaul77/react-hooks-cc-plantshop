@@ -1,26 +1,50 @@
-button {
+/* Style for the form container */
+.new-plant-form {
+  margin: 20px 0;
   padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Style the individual form elements to display in a row */
+.form-row {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap if they overflow */
+  gap: 10px; /* Add spacing between the elements */
+  justify-content: flex-start; /* Align items to the left */
+}
+
+/* Style each input container (form group) */
+.form-group {
+  flex: 1; /* Allow inputs to grow */
+  min-width: 150px; /* Prevent inputs from becoming too small */
+}
+
+/* Style the input fields */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style the checkbox */
+input[type="checkbox"] {
+  margin: 5px 0;
+}
+
+/* Style the submit button */
+button {
+  padding: 10px 20px;
   background-color: #4CAF50;
   color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
 }
 
 button:hover {
   background-color: #45a049;
-}
-
-.plant-card p {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.plant-card p.in-stock {
-  color: green;
-}
-
-.plant-card p.out-of-stock {
-  color: red;
 }

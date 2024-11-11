@@ -1,74 +1,89 @@
 import React, { useState } from 'react';
 
-function AddPlant({ onAddPlant }) {
+function NewPlantForm({ addPlant }) {
+  // State to hold the form input values
   const [name, setName] = useState('');
-  const [image, setImage] = useState('');
   const [price, setPrice] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [image, setImage] = useState('');
+  const [inStock, setInStock] = useState(true); // Default to "in stock"
 
+  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!name || !image || !price) {
-      setError('Please fill in all fields.');
-      return;
-    }
-    if (isNaN(price) || price <= 0) {
-      setError('Please enter a valid price greater than 0.');
+    e.preventDefault(); // Prevent default form behavior (refreshing the page)
+    
+    // Validate inputs (basic check for required fields)
+    if (!name || !price || !image) {
+      alert("Please fill in all fields.");
       return;
     }
 
+    // Prepare the new plant object
     const newPlant = {
+      id: Date.now(), // Use the current timestamp as a unique id
       name,
-      image,
       price: parseFloat(price),
-      inStock: true, // Default value for new plants
+      image,
+      inStock,
     };
 
-    fetch('http://localhost:6001/plants', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newPlant),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setName('');
-        setImage('');
-        setPrice('');
-        setError('');
-        setSuccess(true);
-        onAddPlant(data); // Call the parent function to add the new plant
-      })
-      .catch((error) => {
-        console.error('Error adding plant:', error);
-        setError('Error adding plant. Please try again.');
-        setSuccess(false);
-      });
+    // Call the addPlant function passed from the parent (App.js)
+    addPlant(newPlant);
+
+    // Clear form after submission
+    setName('');
+    setPrice('');
+    setImage('');
+    setInStock(true); // Reset the inStock to true after submitting
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Add a New Plant</h2>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      {success && <div style={{ color: 'green' }}>Plant added successfully!</div>}
-      <label>
-        Name:
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      </label>
-      <label>
-        Image URL:
-        <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
-      </label>
-      <label>
-        Price:
-        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-      </label>
-      <button type="submit">Add Plant</button>
+    <form onSubmit={handleSubmit} className="new-plant-form">
+      <h2>Add New Plant</h2>
+
+      <div className="form-row">
+        <div className="form-group">
+          <label>Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter plant name"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Price:</label>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Enter price"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Image URL:</label>
+          <input
+            type="text"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            placeholder="Enter image URL"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>In Stock:</label>
+          <input
+            type="checkbox"
+            checked={inStock}
+            onChange={() => setInStock(!inStock)}
+          />
+        </div>
+
+        <button type="submit">Add Plant</button>
+      </div>
     </form>
   );
 }
 
-export default AddPlant;
+export default NewPlantForm;

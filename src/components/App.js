@@ -24,9 +24,9 @@ function App() {
     plant.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Define the addPlant function
+  // Add a new plant to the list
   const addPlant = (newPlant) => {
-    setPlants((prevPlants) => [...prevPlants, { ...newPlant, id: prevPlants.length + 1 }]);
+    setPlants((prevPlants) => [...prevPlants, newPlant]);
   };
 
   // Toggle the inStock status of a plant
@@ -38,18 +38,34 @@ function App() {
     );
   };
 
-  // Define the deletePlant function to remove a plant
+  // Delete a plant from the list
   const deletePlant = (id) => {
     setPlants((prevPlants) => prevPlants.filter((plant) => plant.id !== id));
   };
 
+  // Update a plant's information
+  const updatePlant = (updatedPlant) => {
+    setPlants((prevPlants) =>
+      prevPlants.map((plant) =>
+        plant.id === updatedPlant.id
+          ? { ...plant, name: updatedPlant.name, price: updatedPlant.price, inStock: updatedPlant.inStock }
+          : plant
+      )
+    );
+  };
+
   return (
     <div className="app">
-      <h1>Plantsy 🌱</h1>
+      <h1>Plantsy</h1>
 
       <NewPlantForm addPlant={addPlant} />
       <Search searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
-      <PlantList plants={filteredPlants} toggleStockStatus={toggleStockStatus} deletePlant={deletePlant} />
+      <PlantList
+        plants={filteredPlants}
+        toggleStockStatus={toggleStockStatus}
+        deletePlant={deletePlant}
+        updatePlant={updatePlant}
+      />
     </div>
   );
 }

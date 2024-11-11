@@ -6,7 +6,7 @@
       "image": "./images/aloe.jpg",
       "price": 15.99,
       "inStock": true,
-      "soldOut": false
+      "soldOut": true
     },
     {
       "id": 2,
@@ -55,6 +55,27 @@
       "price": 55,
       "inStock": true,
       "soldOut": true
+    },
+    {
+      "name": "Aloe",
+      "image": "https://c8.alamy.com/comp/TACMXH/three-red-rose-flower-buds-and-petals-from-a-vase-TACMXH.jpg",
+      "price": 77,
+      "inStock": true,
+      "id": 8
+    },
+    {
+      "name": "aloe",
+      "image": "https://c8.alamy.com/comp/TACMXH/three-red-rose-flower-buds-and-petals-from-a-vase-TACMXH.jpg",
+      "price": 200,
+      "inStock": true,
+      "id": 9
+    },
+    {
+      "name": "flower",
+      "image": "https://c8.alamy.com/comp/TACMXH/three-red-rose-flower-buds-and-petals-from-a-vase-TACMXH.jpg",
+      "price": 4444,
+      "inStock": true,
+      "id": 10
     }
   ]
 }

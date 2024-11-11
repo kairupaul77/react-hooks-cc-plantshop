@@ -1,61 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import AddPlant from './NewPlantForm';
+import React, { useState } from "react";
+import NewPlantForm from "./NewPlantForm";
+import PlantList from "./PlantList";
+import Search from "./Search";
 
-function PlantList() {
-  const [plants, setPlants] = useState([]);
+function App() {
+  const [plants, setPlants] = useState([
+    { id: 1, name: "Aloe", image: "/images/aloe.jpg", price: 15.99, inStock: true },
+    { id: 2, name: "ZZ Plant", image: "/images/zz-plant.jpg", price: 25.98, inStock: true },
+    { id: 3, name: "Pilea peperomioides", image: "/images/pilea.jpg", price: 5.99, inStock: true },
+    { id: 4, name: "Pothos", image: "/images/pothos.jpg", price: 12.11, inStock: true },
+    { id: 5, name: "Jade", image: "/images/jade.jpg", price: 10.37, inStock: true },
+    { id: 6, name: "Monstera Deliciosa", image: "/images/monstera.jpg", price: 25.99, inStock: true },
+    { id: 7, name: "Fiddle Leaf Fig", image: "/images/fiddle-leaf-fig.jpg", price: 55, inStock: true }
+  ]);
 
-  // Fetch all plants 
-  useEffect(() => {
-    fetch('http://localhost:6001/plants')
-      .then((response) => response.json())
-      .then((data) => setPlants(data));
-  }, []); 
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Toggle the sold-out status of a plant
-  const markSoldOut = (id) => {
-    
-    const plantToUpdate = plants.find((plant) => plant.id === id);
-    
-    // Toggle the soldOut status (inverting the current value)
-    const updatedPlant = { ...plantToUpdate, soldOut: !plantToUpdate.soldOut };
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
-    // Update the backend with the new soldOut status using PATCH
-    fetch(`http://localhost:6001/plants/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedPlant),
-    })
-      .then((response) => response.json())
-      .then((updatedData) => {
-        // Update the state with the modified plant data
-        setPlants(plants.map((plant) => (plant.id === id ? updatedData : plant)));
-      })
-      .catch((error) => {
-        console.error('Error updating the plant status:', error);
-      });
+  const filteredPlants = plants.filter((plant) =>
+    plant.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Define the addPlant function
+  const addPlant = (newPlant) => {
+    setPlants((prevPlants) => [...prevPlants, { ...newPlant, id: prevPlants.length + 1 }]);
+  };
+
+  // Toggle the inStock status of a plant
+  const toggleStockStatus = (id) => {
+    setPlants((prevPlants) =>
+      prevPlants.map((plant) =>
+        plant.id === id ? { ...plant, inStock: !plant.inStock } : plant
+      )
+    );
+  };
+
+  // Define the deletePlant function to remove a plant
+  const deletePlant = (id) => {
+    setPlants((prevPlants) => prevPlants.filter((plant) => plant.id !== id));
   };
 
   return (
-    <div>
-      <h1>All Plants in our store</h1>
-      <div className="plant-list">
-        {plants.map((plant) => (
-          <div key={plant.id} className="plant-card">
-            <img src={plant.image} alt={plant.name} />
-            <h3>{plant.name}</h3>
-            <p>${plant.price}</p>
-            <p>{plant.soldOut ? 'Out of Stock' : 'In Stock'}</p>
-            {/* Button to toggle sold-out status */}
-            <button onClick={() => markSoldOut(plant.id)}>
-              {plant.soldOut ? 'Mark as In Stock' : 'Mark as Sold Out'}
-            </button>
-          </div>
-        ))}
-      </div>
+    <div className="app">
+      <h1>Plantsy 🌱</h1>
+
+      <NewPlantForm addPlant={addPlant} />
+      <Search searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
+      <PlantList plants={filteredPlants} toggleStockStatus={toggleStockStatus} deletePlant={deletePlant} />
     </div>
   );
 }
 
-export default PlantList;
+export default App;

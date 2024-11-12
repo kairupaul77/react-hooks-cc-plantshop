@@ -16,11 +16,9 @@ function PlantList({ plants, toggleStockStatus, deletePlant, updatePlant }) {
   };
 
   return (
-    <div>
-      <ul>
+    <div style={{display: "flex"}} >
         {plants.map((plant) => (
-          <li key={plant.id}>
-            <div>
+            <div key={plant.id}>
               {/* Display Image */}
               <img src={plant.image} alt={plant.name} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
 
@@ -53,9 +51,7 @@ function PlantList({ plants, toggleStockStatus, deletePlant, updatePlant }) {
                 </div>
               )}
             </div>
-          </li>
         ))}
-      </ul>
     </div>
   );
 }
